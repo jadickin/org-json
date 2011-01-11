@@ -874,8 +874,17 @@ public class JSONObject {
      */
     public double optDouble(String key, double defaultValue) {
             Object o = opt(key);
-            return o instanceof Number ? ((Number)o).doubleValue() :
-                new Double((String)o).doubleValue();
+            if (o != null) {
+                    if (o instanceof Number) {
+                            Number n = (Number) o;
+                            return n.doubleValue();
+                    }
+                    if (o instanceof String) {
+                            String s = (String) o;
+                            return new Double(s).doubleValue();
+                    }
+            }
+            return defaultValue;
     }
 
 
