@@ -162,14 +162,14 @@ public class JSONArray {
      * Construct a JSONArray from a Collection.
      * @param collection     A Collection.
      */
-    public JSONArray(Collection<Object> collection) {
+    public JSONArray(Collection<? extends Object> collection) {
         this(collection, false);
     }
 
-    public JSONArray(Collection<Object> collection, boolean includeSuperClass) {
+    public JSONArray(Collection<? extends Object> collection, boolean includeSuperClass) {
         this.myArrayList = new ArrayList<Object>();
         if (collection != null) {
-            Iterator<Object> iter = collection.iterator();;
+            Iterator<? extends Object> iter = collection.iterator();;
             while (iter.hasNext()) {
                 Object o = iter.next();
                 this.myArrayList.add(JSONObject.wrap(o, includeSuperClass));
@@ -587,7 +587,7 @@ public class JSONArray {
      * @param value A Collection value.
      * @return      this.
      */
-    public JSONArray put(Collection<Object> value) {
+    public JSONArray put(Collection<? extends Object> value) {
         put(new JSONArray(value));
         return this;
     }
@@ -681,7 +681,7 @@ public class JSONArray {
      * @throws JSONException If the index is negative or if the value is
      * not finite.
      */
-    public JSONArray put(int index, Collection<Object> value) throws JSONException {
+    public JSONArray put(int index, Collection<? extends Object> value) throws JSONException {
         put(index, new JSONArray(value));
         return this;
     }

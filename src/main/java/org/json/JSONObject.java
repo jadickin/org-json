@@ -1024,7 +1024,7 @@ public class JSONObject {
      * @return      this.
      * @throws JSONException
      */
-    public JSONObject put(String key, Collection<Object> value) throws JSONException {
+    public JSONObject put(String key, Collection<? extends Object> value) throws JSONException {
         put(key, new JSONArray(value));
         return this;
     }
