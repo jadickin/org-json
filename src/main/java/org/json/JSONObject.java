@@ -244,12 +244,12 @@ public class JSONObject {
      *  the JSONObject.
      * @throws JSONException
      */
-    public JSONObject(Map<String, Object> map) {
+    public JSONObject(Map<String, ? extends Object> map) {
         this.map = new LinkedHashMap<String, Object>();
         if (map != null) {
-            Iterator<Map.Entry<String, Object>> i = map.entrySet().iterator();
+            Iterator<? extends Map.Entry<String, ? extends Object>> i = map.entrySet().iterator();
             while (i.hasNext()) {
-                Map.Entry<String, Object> e = (Map.Entry<String, Object>)i.next();
+                Map.Entry<String, ? extends Object> e = i.next();
                 this.map.put(e.getKey(), wrap(e.getValue(), false));
             }
         }
@@ -264,11 +264,11 @@ public class JSONObject {
      * @param map - A map with Key-Bean data.
      * @param includeSuperClass - Tell whether to include the super class properties.
      */
-    public JSONObject(Map<String, Object> map, boolean includeSuperClass) {
+    public JSONObject(Map<String, ? extends Object> map, boolean includeSuperClass) {
            this.map = new LinkedHashMap<String, Object>();
            if (map != null){
-            for (Iterator<Map.Entry<String, Object>> i = map.entrySet().iterator(); i.hasNext(); ) {
-                Map.Entry<String, Object> e = (Map.Entry<String, Object>)i.next();
+            for (Iterator<? extends Map.Entry<String, ? extends Object>> i = map.entrySet().iterator(); i.hasNext(); ) {
+                Map.Entry<String, ? extends Object> e = i.next();
                 this.map.put(e.getKey(), new JSONObject(e.getValue(), includeSuperClass));
             }
            }
@@ -1487,7 +1487,7 @@ public class JSONObject {
             return value.toString();
         }
         if (value instanceof Map) {
-            return new JSONObject((Map<?, ?>)value).toString();
+            return new JSONObject((Map<String, ? extends Object>)value).toString();
         }
         if (value instanceof Collection) {
             return new JSONArray((Collection<?>)value).toString();
@@ -1538,7 +1538,7 @@ public class JSONObject {
             return ((JSONArray)value).toString(indentFactor, indent);
         }
         if (value instanceof Map) {
-            return new JSONObject((Map<?,?>)value).toString(indentFactor, indent);
+            return new JSONObject((Map<String, ? extends Object>)value).toString(indentFactor, indent);
         }
         if (value instanceof Collection) {
             return new JSONArray((Collection<?>)value).toString(indentFactor, indent);
@@ -1582,7 +1582,7 @@ public class JSONObject {
                  return new JSONArray(object, includeSuperClass);
              }
              if (object instanceof Map) {
-                 return new JSONObject((Map<?, ?>)object, includeSuperClass);
+                 return new JSONObject((Map<String, ? extends Object>)object, includeSuperClass);
              }
              Package objectPackage = object.getClass().getPackage();
              String objectPackageName = ( objectPackage != null ? objectPackage.getName() : "" );
